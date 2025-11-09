@@ -1,0 +1,18 @@
+{
+    "python.analysis.diagnosticMode": "workspace",
+    "python.languageServer": "Pylance",
+    "ruff.nativeServer": "on",
+    "[python]": {
+        "editor.defaultFormatter": "charliermarsh.ruff",
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.fixAll.ruff": "explicit",
+            "source.organizeImports.ruff": "explicit"
+        }
+    },
+    "notebook.formatOnSave.enabled": true,
+    "notebook.codeActionsOnSave": {
+        "notebook.source.fixAll.ruff": "explicit",
+        "notebook.source.organizeImports.ruff": "explicit"
+    }
+}

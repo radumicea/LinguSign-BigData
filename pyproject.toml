@@ -1,0 +1,11 @@
+[project]
+name = "LinguSign"
+version = "0.1.0"
+requires-python = ">=3.9"
+
+[tool.pyright]
+venvPath = "."
+venv = ".venv"
+
+[tool.ruff]
+format.quote-style = "single"
