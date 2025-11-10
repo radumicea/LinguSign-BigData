@@ -1,3 +1,6 @@
 .venv
 dlib
 scraped
+*.pyc
+*.npy
+*.pt
