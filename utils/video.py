@@ -14,11 +14,10 @@ def get_vid_metadata(vid_path: str):
     return cap, fps, int(frame_count)
 
 
-def get_frame(idx: int, cap: cv2.VideoCapture, x: int, y: int, h: int, w: int):
+def get_frame(idx: int, cap: cv2.VideoCapture):
     cap.set(cv2.CAP_PROP_POS_FRAMES, idx)
     ret, frame = cap.read()
     if not ret or frame is None:
         cap.release()
         raise IOError(f'Could not read frame {idx}')
-    crop = frame[y : y + h, x : x + w]
-    return cv2.cvtColor(crop, cv2.COLOR_BGR2RGB)
+    return cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)

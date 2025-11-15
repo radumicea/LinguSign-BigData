@@ -4,3 +4,5 @@ scraped
 *.pyc
 *.npy
 *.pt
+cookies.txt
+thumbs
