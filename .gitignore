@@ -5,3 +5,5 @@ scraped
 *.npy
 *.pt
 cookies.txt
+whisper_large-v3-turbo
+whisperx-align_ro
