@@ -11,3 +11,6 @@ transformers==4.51.3
 whisperx==3.7.4
 yt_dlp==2025.11.12
 zstandard==0.25.0
+peft==0.17.1
+sacrebleu==2.5.1
+wandb==0.23.0

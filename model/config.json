@@ -1,0 +1,23 @@
+{
+    "max_vis_tokens": 512,
+    "max_text_tokens": 256,
+    "mt5_model_name": "dumitrescustefan/mt5-base-romanian",
+    "lora_r": 32,
+    "lora_alpha": 32,
+    "lora_dropout": 0.1,
+    "prefix_text": "Tradu din limbajul semnelor în română: ",
+    "label_smoothing": 0.05,
+    "alpha_vt": 0.25,
+    "combined_loss": true,
+    "epochs": 8,
+    "vt_warmup_steps": 6000,
+    "betas": [0.9, 0.98],
+    "weight_decay": 0.01,
+    "lr_warmup_steps": 12000,
+    "max_lr": 6e-4,
+    "min_lr": 6e-5,
+    "batch_size": 2,
+    "grad_accum_steps": 8,
+    "vt_warmup_batch_size": 16,
+    "val_every_n_epochs": 1
+}
