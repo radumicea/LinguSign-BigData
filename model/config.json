@@ -1,6 +1,6 @@
 {
-    "max_vis_tokens": 512,
-    "max_text_tokens": 256,
+    "max_vis_tokens": 256,
+    "max_text_tokens": 128,
     "mt5_model_name": "dumitrescustefan/mt5-base-romanian",
     "lora_r": 32,
     "lora_alpha": 32,

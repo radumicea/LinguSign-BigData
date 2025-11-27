@@ -20,17 +20,17 @@ class TemporalConvStack(nn.Module):
     def __init__(self, dim: int):
         super().__init__()
         self.conv1 = nn.Conv1d(dim, dim, kernel_size=5, padding=2, stride=1)
-        self.bn1 = nn.BatchNorm1d(dim)
+        self.gn1 = nn.GroupNorm(num_groups=8, num_channels=dim)
         self.conv2 = nn.Conv1d(dim, dim, kernel_size=5, padding=2, stride=1)
-        self.bn2 = nn.BatchNorm1d(dim)
+        self.gn2 = nn.GroupNorm(num_groups=8, num_channels=dim)
         self.pool = nn.MaxPool1d(kernel_size=2)
         self.ln = nn.LayerNorm(dim)
 
     def forward(self, x: torch.Tensor, lengths: torch.Tensor):
         x_ = x.transpose(1, 2)
-        x_ = F.relu(self.bn1(self.conv1(x_)))
+        x_ = F.relu(self.gn1(self.conv1(x_)))
         x_ = self.pool(x_)
-        x_ = F.relu(self.bn2(self.conv2(x_)))
+        x_ = F.relu(self.gn2(self.conv2(x_)))
         x_ = self.pool(x_)
         y = x_.transpose(1, 2)
         y = self.ln(y)
@@ -145,7 +145,7 @@ class LinguSign(nn.Module):
         self.alpha_vt = float(alpha_vt)
         self.combined_loss = combined_loss
 
-        self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+        self.device = torch.device('cuda')
         self.dtype = torch.float32
 
         self.tokenizer = T5Tokenizer.from_pretrained(mt5_model_name, legacy=False)
@@ -162,6 +162,8 @@ class LinguSign(nn.Module):
             mt5_model_name,
             torch_dtype=self.dtype,
         )
+        base.gradient_checkpointing_enable()
+        base.config.use_cache = False
         self.mt5 = get_peft_model(base, lcfg).to(self.device)
 
         hidden = self.mt5.config.d_model  # type: ignore
@@ -310,10 +312,10 @@ class LinguSign(nn.Module):
         vis_tokens: torch.Tensor,
         vis_lengths: torch.Tensor,
         max_new_tokens: int,
-        temperature: float = 0.5,
-        top_p: float = 0.9,
-        do_sample: bool = True,
-        num_beams: int = 4,
+        temperature: float | None = None,
+        top_p: float | None = None,
+        do_sample: bool = False,
+        num_beams: int | None = 1,
     ) -> List[str]:
         vis_tokens = vis_tokens.to(self.device, self.dtype)
         vis_lengths = vis_lengths.to(self.device)
